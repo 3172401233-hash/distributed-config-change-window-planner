@@ -1,0 +1,38 @@
+{
+  "current": {
+    "user-service": { "timeout.ms": 2000 },
+    "gateway": { "retry.max": 3, "degradation.enabled": false }
+  },
+  "services": [
+    {
+      "name": "user-service",
+      "version": "2.4.0",
+      "features": { "degradation": true },
+      "instances": [
+        { "id": "us-1", "applyAfterMs": 0 },
+        { "id": "us-2", "applyAfterMs": 30000 }
+      ]
+    },
+    {
+      "name": "gateway",
+      "version": "2.4.0",
+      "features": { "degradation": true },
+      "instances": [
+        { "id": "gw-1", "applyAfterMs": 5000 },
+        { "id": "gw-2", "applyAfterMs": 60000 }
+      ],
+      "dependsOn": [{ "service": "user-service", "field": "timeout.ms" }]
+    }
+  ],
+  "changes": [
+    { "service": "user-service", "key": "timeout.ms", "value": 1500 },
+    { "service": "gateway", "key": "degradation.enabled", "value": true },
+    { "service": "gateway", "key": "retry.max", "value": 5 }
+  ],
+  "compatibility": {
+    "timeout.ms": ">=1.0.0",
+    "retry.max": ">=2.0.0",
+    "degradation.enabled": ">=2.3.0"
+  },
+  "errorBudget": { "maxInstancesPerBatch": 10, "maxDegradationGapMs": 0 }
+}

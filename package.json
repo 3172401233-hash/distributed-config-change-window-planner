@@ -1,0 +1,13 @@
+{
+  "name": "distributed-config-change-window-planner",
+  "version": "1.0.0",
+  "description": "规划配置传播、功能开关和依赖服务的生效窗口",
+  "type": "module",
+  "engines": {
+    "node": ">=24.16.0"
+  },
+  "scripts": {
+    "test": "node --test",
+    "plan": "node bin/plan.js"
+  }
+}
